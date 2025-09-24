@@ -56,3 +56,24 @@ export async function fetchCategories(): Promise<Category[]> {
     return [];
   }
 }
+
+export async function addCategory(name: string) {
+  try {
+    await db.insert(categories).values({
+      name: name,
+    });
+  } catch (error: any) {
+    console.log("Error:", error.message);
+  }
+}
+
+export async function addTask(title: string, categoryId: string) {
+  try {
+    await db.insert(tasks).values({
+      title: title,
+      categoryId: parseInt(categoryId, 10),
+    });
+  } catch (error: any) {
+    console.log("Error:", error.message);
+  }
+}
