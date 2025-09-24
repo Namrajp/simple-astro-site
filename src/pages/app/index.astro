@@ -37,7 +37,14 @@ const categories = await fetchCategories();
               />
             </form>
           </div>
-          <div class="p-2 flex-1 w-full">{task.title}</div>
+          <div
+            class={
+              "p-2 flex-1 w-full" +
+              (task.done ? " line-through text-gray-400" : "")
+            }
+          >
+            {task.title}
+          </div>
           <div class="p-2">{task.category_name || ""}</div>
           <div class="p-2">
             <form action={"/app/tasks/" + task.id + "/delete"} method="POST">
@@ -55,12 +62,14 @@ const categories = await fetchCategories();
         </div>
       ))
   }
+
   <button
     id="button-add"
     class="fixed bottom-6 right-6 w-14 h-14 bg-green-500 hover:bg-green-600 text-white rounded-full flex items-center justify-center shadow-lg transition-transform hover:-translate-y-1 cursor-pointer"
   >
     <span class="text-3xl -mt-1 font-bold">&plus;</span>
   </button>
+
   <dialog
     id="dialog-add"
     class="rounded-lg shadow-xl border-0 p-0 w-full max-w-md fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2"

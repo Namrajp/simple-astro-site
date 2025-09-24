@@ -77,3 +77,32 @@ export async function addTask(title: string, categoryId: string) {
     console.log("Error:", error.message);
   }
 }
+
+export async function deleteTask(id: string) {
+  try {
+    await db.delete(tasks).where(eq(tasks.id, parseInt(id, 10)));
+  } catch (error: any) {
+    console.log("Error:", error.message);
+  }
+}
+
+export async function deleteCategory(id: string) {
+  try {
+    await db.delete(categories).where(eq(categories.id, parseInt(id, 10)));
+  } catch (error: any) {
+    console.log("Error:", error.message);
+  }
+}
+
+import { sql } from "drizzle-orm";
+
+export async function toggleTask(id: string) {
+  try {
+    await db
+      .update(tasks)
+      .set({ done: sql`NOT done` })
+      .where(eq(tasks.id, parseInt(id, 10)));
+  } catch (error: any) {
+    console.log("Error:", error.message);
+  }
+}
