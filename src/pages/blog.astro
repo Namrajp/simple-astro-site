@@ -4,6 +4,377 @@ import Layout from "../layouts/common.astro";
 
 <Layout title="Blog">
   <div
+    class="mb-10 p-8 bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col text-left"
+  >
+    <p class="mb-2 text-gray-400 uppercase text-sm">Feb 21 2026</p>
+    <h3 class="mt-4 text-3xl font-semibold text-gray-900">
+      The Python Guide: Virtual Environments, pip, and Everyday Workflows
+    </h3>
+
+    <p class="mt-6 text-gray-500">
+      Python is one of the most widely used languages in the world, but a clean development
+      workflow matters just as much as the code itself. This guide covers the essentials —
+      virtual environments, dependency management, and handy tricks that save time day to day.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">1. Setting Up a Virtual Environment with venv</h4>
+    <p class="mt-3 text-gray-500">
+      Virtual environments keep each project's dependencies isolated from one another and from
+      your system Python. Every project should have its own — it prevents version conflicts
+      and makes your setup reproducible on any machine.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>mkdir projectA && cd projectA</p>
+      <p class="mt-1">python3.8 -m venv env</p>
+      <p class="mt-1">source env/bin/activate &nbsp;&nbsp;&nbsp;<span class="text-gray-400"># Linux / macOS</span></p>
+      <p class="mt-1">env\Scripts\activate.bat &nbsp;<span class="text-gray-400"># Windows CMD</span></p>
+      <p class="mt-1">env\Scripts\Activate.ps1 &nbsp;<span class="text-gray-400"># Windows PowerShell</span></p>
+      <p class="mt-2 text-gray-400"># To exit the environment:</p>
+      <p>deactivate</p>
+    </div>
+    <p class="mt-3 text-gray-500">
+      Running <code class="bg-gray-100 px-1 rounded text-sm">python3.8 -m venv env</code> creates an
+      <code class="bg-gray-100 px-1 rounded text-sm">env/</code> folder containing an isolated Python binary,
+      pip, and a <code class="bg-gray-100 px-1 rounded text-sm">lib/</code> directory for installed packages.
+      Always add <code class="bg-gray-100 px-1 rounded text-sm">env/</code> to your <code class="bg-gray-100 px-1 rounded text-sm">.gitignore</code> — it should never be committed to version control.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">2. Managing Dependencies with pip</h4>
+    <p class="mt-3 text-gray-500">
+      pip is Python's package installer. The key workflow is to install what you need, then freeze
+      those dependencies into a <code class="bg-gray-100 px-1 rounded text-sm">requirements.txt</code> file so anyone else can reproduce
+      your exact environment with a single command.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>pip install Flask &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-gray-400"># install a package</span></p>
+      <p class="mt-1">pip list &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-gray-400"># see installed packages</span></p>
+      <p class="mt-1">pip freeze &gt; requirements.txt &nbsp;<span class="text-gray-400"># save exact versions</span></p>
+      <p class="mt-1">pip install -r requirements.txt <span class="text-gray-400"># restore from file</span></p>
+    </div>
+    <p class="mt-3 text-gray-500">
+      To uninstall and cleanly reinstall all dependencies — useful when something breaks — run
+      <code class="bg-gray-100 px-1 rounded text-sm">pip uninstall package-name</code> followed by
+      <code class="bg-gray-100 px-1 rounded text-sm">pip install -r requirements.txt</code>.
+      This is often the fastest way to resolve mysterious dependency conflicts.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">3. virtualenvwrapper for Convenience</h4>
+    <p class="mt-3 text-gray-500">
+      If you manage many projects, <code class="bg-gray-100 px-1 rounded text-sm">virtualenvwrapper</code> is a layer on top of venv that
+      gives you short commands to create, switch, list, and delete environments from anywhere
+      on your system — no need to navigate into the project folder first.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>pip3 install virtualenvwrapper</p>
+      <p class="mt-2">mkvirtualenv my-project &nbsp;&nbsp;<span class="text-gray-400"># create</span></p>
+      <p class="mt-1">workon my-project &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-gray-400"># activate</span></p>
+      <p class="mt-1">lsvirtualenv &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="text-gray-400"># list all environments</span></p>
+      <p class="mt-1">rmvirtualenv my-project &nbsp;&nbsp;<span class="text-gray-400"># delete</span></p>
+    </div>
+    <p class="mt-3 text-gray-500">
+      You can confirm which environment is currently active at any time by running
+      <code class="bg-gray-100 px-1 rounded text-sm">echo $VIRTUAL_ENV</code> — it prints the full path
+      to the active environment, or nothing if none is active.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">4. Spin Up a Quick HTTP Server</h4>
+    <p class="mt-3 text-gray-500">
+      Python ships with a built-in HTTP server that's useful for serving static files locally —
+      great for previewing HTML or sharing a folder over a local network without installing anything extra.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>python -m http.server 8000</p>
+      <p class="mt-1 text-gray-400"># Serves the current directory at http://localhost:8000</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">5. Clearing the Python Interpreter</h4>
+    <p class="mt-3 text-gray-500">
+      When working interactively in the Python REPL, the screen can fill up quickly. There's no
+      built-in <code class="bg-gray-100 px-1 rounded text-sm">clear</code> command, but you can use
+      <code class="bg-gray-100 px-1 rounded text-sm">os.system()</code> to call the terminal's clear command.
+      A cross-platform one-liner works on both Windows and Unix.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example — cross-platform clear</p>
+      <p>import os</p>
+      <p class="mt-1">clear = lambda: os.system('cls' if os.name == 'nt' else 'clear')</p>
+      <p class="mt-1">clear() &nbsp;<span class="text-gray-400"># call it any time</span></p>
+    </div>
+    <p class="mt-3 text-gray-500">
+      <code class="bg-gray-100 px-1 rounded text-sm">os.name == 'nt'</code> evaluates to
+      <code class="bg-gray-100 px-1 rounded text-sm">True</code> on Windows and
+      <code class="bg-gray-100 px-1 rounded text-sm">False</code> on Linux or macOS,
+      so the same function works everywhere without any changes.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">6. Python in WSL / Ubuntu on Windows</h4>
+    <p class="mt-3 text-gray-500">
+      When running Python projects inside WSL (Windows Subsystem for Linux), your Windows files
+      are accessible under <code class="bg-gray-100 px-1 rounded text-sm">/mnt/c/</code>.
+      Navigate there from the Ubuntu terminal to work on projects stored in your Windows filesystem.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>cd /mnt/c/Users/yourname/dev/my-project</p>
+      <p class="mt-1">python3 -m venv env</p>
+      <p class="mt-1">source env/bin/activate</p>
+    </div>
+    <p class="mt-3 text-gray-500">
+      If you run into issues with Node-based tools (like Vite) inside WSL, a common fix is to
+      delete <code class="bg-gray-100 px-1 rounded text-sm">node_modules</code> and reinstall from within the Linux environment,
+      or set <code class="bg-gray-100 px-1 rounded text-sm">CHOKIDAR_USEPOLLING=true</code> to work around file-watcher mismatches
+      between Windows and Linux.
+    </p>
+
+    <p class="mt-8 text-gray-500">
+      A solid Python workflow comes down to three habits: always use a virtual environment,
+      keep your <code class="bg-gray-100 px-1 rounded text-sm">requirements.txt</code> up to date, and know your tools.
+      The commands above cover the majority of what you'll need for day-to-day Python development.
+    </p>
+  </div>
+
+  <div
+    class="mb-10 p-8 bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col text-left"
+  >
+    <p class="mb-2 text-gray-400 uppercase text-sm">Feb 21 2026</p>
+    <h3 class="mt-4 text-3xl font-semibold text-gray-900">
+      The Prompting Guide: Get Better Results from AI
+    </h3>
+
+    <p class="mt-6 text-gray-500">
+      Prompting is the art of giving an AI clear, well-structured instructions to get the output you actually want.
+      Most people treat it like a search engine — short, keyword-heavy queries — but AI models respond much better
+      to natural language with context and intent.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">1. Be Specific About What You Want</h4>
+    <p class="mt-3 text-gray-500">
+      Vague prompts produce vague results. The more precisely you describe your goal, the more useful the output.
+      Think about format, length, audience, and tone before you write your prompt.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p><span class="text-red-400">Weak:</span> "Write about climate change."</p>
+      <p class="mt-1"><span class="text-green-500">Strong:</span> "Write a 3-paragraph summary of climate change causes for a high school audience, using simple language and one real-world example."</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">2. Give the AI a Role</h4>
+    <p class="mt-3 text-gray-500">
+      Assigning a persona or role to the AI anchors its tone and knowledge base to what you need.
+      This technique — called role prompting — consistently improves response quality for specialized tasks.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"You are a senior software engineer reviewing a pull request. Point out any bugs, edge cases, or style issues in the following code:"</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">3. Provide Context and Constraints</h4>
+    <p class="mt-3 text-gray-500">
+      Context helps the model understand your situation; constraints keep the output usable.
+      Tell the AI what you already know, what to avoid, and any hard requirements like word count or format.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"I'm building a landing page for a B2B SaaS tool. Write 5 headline options. Each headline must be under 10 words and focus on saving time, not features."</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">4. Use Step-by-Step Instructions</h4>
+    <p class="mt-3 text-gray-500">
+      For complex tasks, break the problem into steps within your prompt. This mirrors how a person
+      would think through the problem and leads to more structured, accurate responses.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"To review this essay: (1) Identify the main argument. (2) List two strengths. (3) Suggest one specific improvement. Use bullet points for each section."</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">5. Iterate and Refine</h4>
+    <p class="mt-3 text-gray-500">
+      A single prompt rarely gets you all the way there — and that's fine. Treat prompting as a conversation.
+      Follow up with corrections like "make it shorter," "use a more formal tone," or "focus only on the second point."
+    </p>
+    <p class="mt-3 text-gray-500">
+      You can also ask the AI to critique its own output: <span class="italic">"What are the weaknesses of this response?"</span>
+      This self-reflection step often surfaces gaps you might have missed and leads to a noticeably better final result.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">6. Show, Don't Just Tell</h4>
+    <p class="mt-3 text-gray-500">
+      Including an example of the output format you want — even a partial one — dramatically improves accuracy.
+      This is called few-shot prompting, and it works because the model can pattern-match to your example.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"Generate 3 task descriptions in this format:</p>
+      <p class="mt-1 pl-4">Task: [name] | Priority: [High/Med/Low] | Due: [date]</p>
+      <p class="mt-1">Here's one example: Task: Write report | Priority: High | Due: Friday"</p>
+    </div>
+
+    <p class="mt-8 text-gray-500">
+      Good prompting is a skill that compounds over time. The more you experiment and pay attention to
+      what shifts the output, the faster you'll get to results that are actually useful.
+      Start simple, add constraints as needed, and iterate.
+    </p>
+  </div>
+
+  <div
+    class="mb-10 p-8 bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col text-left"
+  >
+    <p class="mb-2 text-gray-400 uppercase text-sm">Feb 18 2026</p>
+    <h3 class="mt-4 text-3xl font-semibold text-gray-900">
+      The Claude Guide: How to Get the Most Out of Anthropic's AI
+    </h3>
+
+    <p class="mt-6 text-gray-500">
+      Claude is Anthropic's AI assistant, built with a strong emphasis on being helpful, harmless, and honest.
+      It excels at long-form reasoning, nuanced writing, and following complex multi-step instructions —
+      but like any tool, it rewards users who understand how it thinks.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">1. Lean Into Long Contexts</h4>
+    <p class="mt-3 text-gray-500">
+      Claude supports very large context windows, meaning you can paste in entire documents, codebases,
+      or lengthy conversations and ask questions about them. Take advantage of this — don't summarize
+      your source material before pasting it in. Let Claude read the original.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"Here is the full transcript of our Q3 planning meeting. Identify the three most important decisions made and list any action items assigned."</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">2. Ask for Reasoning, Not Just Answers</h4>
+    <p class="mt-3 text-gray-500">
+      Claude is particularly strong at working through problems step by step. When you need accuracy on
+      complex topics — analysis, math, logic, legal reasoning — ask it to show its work rather than
+      jump straight to a conclusion.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p><span class="text-red-400">Weak:</span> "Is this contract clause enforceable?"</p>
+      <p class="mt-1"><span class="text-green-500">Strong:</span> "Walk me through whether this contract clause would be enforceable, step by step, considering jurisdiction, intent, and standard legal precedent."</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">3. Be Direct About Format</h4>
+    <p class="mt-3 text-gray-500">
+      Claude defaults to well-structured responses but will follow explicit format instructions closely.
+      If you want bullet points, a table, plain prose, or a specific JSON shape — just say so.
+      The more explicit you are, the less post-processing you'll need to do.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"Respond only with a JSON object with the keys: summary, risks, and next_steps. No prose, no markdown, just raw JSON."</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">4. Give Feedback Mid-Conversation</h4>
+    <p class="mt-3 text-gray-500">
+      Claude maintains context well across a conversation, so corrections carry weight. If a response
+      misses the mark, tell it specifically what was off rather than starting a new prompt from scratch.
+      Small adjustments in-thread often produce better results than rewriting the whole prompt.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"The tone is too formal. Rewrite the second paragraph to sound more like a friendly colleague, not a legal document."</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">5. Use Claude for First Drafts and Structured Thinking</h4>
+    <p class="mt-3 text-gray-500">
+      Claude shines at unblocking creative or analytical work. Use it to generate a rough draft, outline
+      an argument, or brainstorm options — then refine from there. Treating it as a thinking partner
+      rather than a final-answer machine gets you much further.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"I need to write a proposal for migrating our app to a microservices architecture. Give me an outline with 5 sections, and for each section write one sentence describing what it should cover."</p>
+    </div>
+
+    <p class="mt-8 text-gray-500">
+      Claude is a strong general-purpose assistant that rewards clear communication and iterative dialogue.
+      The more context you provide and the more specific your instructions, the more it can actually help —
+      treat it less like a search engine and more like a thoughtful collaborator.
+    </p>
+  </div>
+
+  <div
+    class="mb-10 p-8 bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col text-left"
+  >
+    <p class="mb-2 text-gray-400 uppercase text-sm">Feb 14 2026</p>
+    <h3 class="mt-4 text-3xl font-semibold text-gray-900">
+      The Gemini Guide: How to Get the Most Out of Google's AI
+    </h3>
+
+    <p class="mt-6 text-gray-500">
+      Gemini is Google's family of AI models, tightly integrated with Google's ecosystem — Search, Docs,
+      Gmail, and more. It's multimodal by design, meaning it can reason over text, images, audio, video,
+      and code within the same conversation. Knowing its strengths helps you prompt it effectively.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">1. Use Its Multimodal Strengths</h4>
+    <p class="mt-3 text-gray-500">
+      Gemini can process images, PDFs, and other media natively. Instead of describing a chart or
+      diagram in words, upload it directly and ask your question about the visual content.
+      This gives Gemini much more signal to work with than a text description alone.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"[Attach screenshot of dashboard] What trends do you see in this data? Are there any anomalies worth investigating?"</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">2. Ground Prompts with Real-World Context</h4>
+    <p class="mt-3 text-gray-500">
+      Gemini integrates with Google Search and can access up-to-date information. When asking about
+      recent events, current prices, or live data, explicitly prompt it to use search or ground
+      its answer in current sources rather than relying on training data.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"Using current information, what are the latest benchmark results comparing Gemini Ultra and GPT-4o? Cite your sources."</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">3. Be Explicit About Output Structure</h4>
+    <p class="mt-3 text-gray-500">
+      Gemini responds well to structured output requests. If you need data in a table, a numbered list,
+      or a specific schema, say so explicitly upfront. Defining the structure before the content
+      produces cleaner, more consistent results.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"Compare these three databases: PostgreSQL, MySQL, and SQLite. Use a markdown table with columns: Feature, PostgreSQL, MySQL, SQLite."</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">4. Leverage Its Code Capabilities</h4>
+    <p class="mt-3 text-gray-500">
+      Gemini performs well on coding tasks, especially when paired with Google's tooling like
+      Colab or IDX. For best results, include the language, the goal, and any constraints like
+      runtime or library versions directly in your prompt.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"Write a Python 3.11 function that reads a CSV file using pandas, filters rows where the 'status' column equals 'active', and returns the result as a list of dicts."</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">5. Chain Tasks in a Single Prompt</h4>
+    <p class="mt-3 text-gray-500">
+      Gemini handles multi-part instructions well. You can ask it to perform several related tasks
+      in one prompt — analyze, then summarize, then reformat — without breaking it into separate
+      messages. This keeps context tight and reduces back-and-forth.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>"Read the following article, identify the main argument, list three supporting points, and then rewrite the conclusion in two sentences for a non-technical audience."</p>
+    </div>
+
+    <p class="mt-8 text-gray-500">
+      Gemini's real edge is in its breadth — multimodal input, live data access, and deep Google
+      ecosystem integration. Match your prompts to those strengths: give it rich inputs, ask for
+      structured outputs, and let it pull in real-world context when it matters.
+    </p>
+  </div>
+
+  <div
     class="mb-10 p-8 bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col"
   >
     <p class="mb-6 text-gray-400 uppercase text-sm">Feb 10 2025</p>
