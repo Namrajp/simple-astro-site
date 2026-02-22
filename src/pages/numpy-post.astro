@@ -1,0 +1,162 @@
+---
+import Layout from "../layouts/common.astro";
+---
+
+<Layout title="Blog">
+  <div
+    class="mb-10 p-8 bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col text-left"
+  >
+    <p class="mb-2 text-gray-400 uppercase text-sm">Feb 22 2026</p>
+    <h3 class="mt-4 text-3xl font-semibold text-gray-900">
+      Getting Started with NumPy: A Minimal Guide for Python & C Developers
+    </h3>
+
+    <p class="mt-6 text-gray-500">
+      NumPy is the foundational numerical computing library for Python. It provides the
+      <code class="bg-gray-100 px-1 rounded text-sm">ndarray</code> — a fast, fixed-type, n-dimensional array — and a rich set
+      of vectorized math operations. Nearly every scientific Python library (pandas, PyTorch,
+      scikit-learn) is built on top of it, making NumPy one of the highest-leverage things
+      you can learn.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">1. Installation & Import</h4>
+    <p class="mt-3 text-gray-500">
+      NumPy is conventionally imported as <code class="bg-gray-100 px-1 rounded text-sm">np</code> — you'll see this alias in virtually
+      every codebase and tutorial.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Shell</p>
+      <p>pip install numpy</p>
+      <p class="mt-3 text-gray-700">import numpy as np</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">2. Creating Arrays</h4>
+    <p class="mt-3 text-gray-500">
+      NumPy provides many constructors. The most common are
+      <code class="bg-gray-100 px-1 rounded text-sm">np.array()</code> for converting existing data,
+      <code class="bg-gray-100 px-1 rounded text-sm">np.arange()</code> as a typed alternative to
+      <code class="bg-gray-100 px-1 rounded text-sm">range()</code>, and
+      <code class="bg-gray-100 px-1 rounded text-sm">np.zeros()</code> / <code class="bg-gray-100 px-1 rounded text-sm">np.ones()</code> for initialized arrays.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>np.array([1, 2, 3])          <span class="text-gray-400"># 1D from list</span></p>
+      <p class="mt-1">np.array([[1,2],[3,4]])        <span class="text-gray-400"># 2D matrix</span></p>
+      <p class="mt-3">np.zeros((3, 4))               <span class="text-gray-400"># 3×4 of 0.0</span></p>
+      <p class="mt-1">np.ones((2, 3))                <span class="text-gray-400"># 2×3 of 1.0</span></p>
+      <p class="mt-1">np.eye(3)                      <span class="text-gray-400"># 3×3 identity matrix</span></p>
+      <p class="mt-3">np.arange(0, 10, 2)            <span class="text-gray-400"># [0 2 4 6 8]</span></p>
+      <p class="mt-1">np.linspace(0, 1, 5)           <span class="text-gray-400"># [0. .25 .5 .75 1.]</span></p>
+      <p class="mt-3">np.random.rand(3, 3)           <span class="text-gray-400"># uniform random [0, 1)</span></p>
+      <p class="mt-1">np.random.randn(3, 3)          <span class="text-gray-400"># standard normal</span></p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">3. Indexing & Slicing</h4>
+    <p class="mt-3 text-gray-500">
+      1D slicing feels identical to Python lists. For 2D arrays, use comma-separated indices
+      — <code class="bg-gray-100 px-1 rounded text-sm">m[row, col]</code> — which is more concise and faster than nested brackets.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>a = np.array([10, 20, 30, 40, 50])</p>
+      <p class="mt-2">a[0]      <span class="text-gray-400"># 10</span></p>
+      <p class="mt-1">a[-1]     <span class="text-gray-400"># 50</span></p>
+      <p class="mt-1">a[1:4]    <span class="text-gray-400"># [20 30 40]</span></p>
+      <p class="mt-1">a[::2]    <span class="text-gray-400"># [10 30 50] — every 2nd</span></p>
+      <p class="mt-3">m = np.array([[1,2,3],[4,5,6]])</p>
+      <p class="mt-2">m[0, 1]   <span class="text-gray-400"># 2  — row 0, col 1</span></p>
+      <p class="mt-1">m[:, 1]   <span class="text-gray-400"># [2 5] — entire column 1</span></p>
+      <p class="mt-1">m[1, :]   <span class="text-gray-400"># [4 5 6] — entire row 1</span></p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">4. Vectorized Math</h4>
+    <p class="mt-3 text-gray-500">
+      Operations on NumPy arrays are applied element-wise with no Python loop. This is the
+      core performance win — vectorized operations run in compiled C code under the hood,
+      making them 10–100× faster than equivalent Python loops.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>a = np.array([1, 2, 3])</p>
+      <p>b = np.array([4, 5, 6])</p>
+      <p class="mt-3">a + b      <span class="text-gray-400"># [5 7 9]</span></p>
+      <p class="mt-1">a * b      <span class="text-gray-400"># [4 10 18]</span></p>
+      <p class="mt-1">a ** 2     <span class="text-gray-400"># [1 4 9]</span></p>
+      <p class="mt-1">a + 10     <span class="text-gray-400"># [11 12 13] — scalar broadcast</span></p>
+      <p class="mt-3">np.sqrt(a)</p>
+      <p class="mt-1">np.exp(a)</p>
+      <p class="mt-1">np.sin(a)</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">5. Broadcasting</h4>
+    <p class="mt-3 text-gray-500">
+      Broadcasting lets you operate on arrays of different shapes without manually tiling or
+      repeating data. NumPy stretches size-1 dimensions automatically to match. Dimensions
+      are compared right-to-left — a dimension of size <code class="bg-gray-100 px-1 rounded text-sm">1</code> expands to match the other.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>m = np.ones((3, 3))</p>
+      <p>v = np.array([1, 2, 3])</p>
+      <p class="mt-3">m + v</p>
+      <p class="mt-1 text-gray-400"># [[2. 3. 4.]</p>
+      <p class="text-gray-400">#  [2. 3. 4.]</p>
+      <p class="text-gray-400">#  [2. 3. 4.]]</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">6. Aggregations</h4>
+    <p class="mt-3 text-gray-500">
+      Use the <code class="bg-gray-100 px-1 rounded text-sm">axis</code> parameter to aggregate across rows or columns.
+      <code class="bg-gray-100 px-1 rounded text-sm">axis=0</code> collapses rows (giving one value per column),
+      <code class="bg-gray-100 px-1 rounded text-sm">axis=1</code> collapses columns (giving one value per row).
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>a = np.array([[1,2,3],[4,5,6]])</p>
+      <p class="mt-3">a.sum()          <span class="text-gray-400"># 21</span></p>
+      <p class="mt-1">a.sum(axis=0)    <span class="text-gray-400"># [5 7 9]  — per column</span></p>
+      <p class="mt-1">a.sum(axis=1)    <span class="text-gray-400"># [6 15]   — per row</span></p>
+      <p class="mt-3">a.mean() &nbsp;/ np.std(a)</p>
+      <p class="mt-1">a.argmin() / a.argmax()   <span class="text-gray-400"># index of min/max</span></p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">7. Reshaping & Boolean Masking</h4>
+    <p class="mt-3 text-gray-500">
+      Reshaping is cheap — NumPy reuses the same memory when possible. Boolean masking lets
+      you filter or update elements declaratively, without a loop.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>a = np.arange(12)</p>
+      <p class="mt-2">a.reshape(3, 4)    <span class="text-gray-400"># 3 rows, 4 cols</span></p>
+      <p class="mt-1">a.reshape(2, -1)   <span class="text-gray-400"># -1 = infer → (2, 6)</span></p>
+      <p class="mt-1">a.flatten()        <span class="text-gray-400"># copy → 1D</span></p>
+      <p class="mt-3">b = np.array([10, 25, 3, 47, 8])</p>
+      <p class="mt-2">b[b > 10]          <span class="text-gray-400"># [25 47]</span></p>
+      <p class="mt-1">b[b > 10] = 0      <span class="text-gray-400"># set matching elements</span></p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">8. ⚠️ Copies vs. Views</h4>
+    <p class="mt-3 text-gray-500">
+      This is the most common gotcha coming from C or Python. Slices in NumPy return a
+      <span class="italic">view</span> into the original array — not a copy. Modifying the slice modifies
+      the original. When in doubt, call <code class="bg-gray-100 px-1 rounded text-sm">.copy()</code> explicitly.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>a = np.array([1, 2, 3])</p>
+      <p class="mt-3">b = a          <span class="text-gray-400"># NOT a copy — shares memory</span></p>
+      <p class="mt-1">b = a.copy()   <span class="text-gray-400"># real independent copy</span></p>
+      <p class="mt-3">s = a[1:]      <span class="text-gray-400"># slice is a VIEW — modifying s modifies a</span></p>
+    </div>
+
+    <p class="mt-8 text-gray-500">
+      The single most important habit to build with NumPy is to <span class="italic">stop writing loops</span>.
+      If you're iterating over array elements, there's almost always a vectorized equivalent
+      that's significantly faster. Internalize vectorization and broadcasting — everything else
+      follows. From here, NumPy knowledge transfers directly to
+      <span class="font-medium text-gray-700">pandas</span> (which builds on top of it) and
+      <span class="font-medium text-gray-700">PyTorch</span> (whose tensor API is conceptually identical).
+    </p>
+  </div>
+</Layout>

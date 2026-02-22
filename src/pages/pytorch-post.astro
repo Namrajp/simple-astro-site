@@ -1,0 +1,152 @@
+---
+import Layout from "../layouts/common.astro";
+---
+
+<Layout title="Blog">
+  <div
+    class="mb-10 p-8 bg-white border border-gray-200 rounded-2xl shadow-sm flex flex-col text-left"
+  >
+    <p class="mb-2 text-gray-400 uppercase text-sm">Feb 22 2026</p>
+    <h3 class="mt-4 text-3xl font-semibold text-gray-900">
+      Getting Started with PyTorch: A Minimal Guide for Python Developers
+    </h3>
+
+    <p class="mt-6 text-gray-500">
+      PyTorch is the leading deep learning framework used in research and production. Its core
+      abstraction is the <code class="bg-gray-100 px-1 rounded text-sm">Tensor</code> — conceptually identical to a NumPy array, but capable
+      of running on a GPU and tracking gradients for automatic differentiation. If you know
+      NumPy, you already know most of the API.
+    </p>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">1. Installation</h4>
+    <p class="mt-3 text-gray-500">
+      Install PyTorch from the official site at
+      <code class="bg-gray-100 px-1 rounded text-sm">pytorch.org</code> — the command varies depending on
+      whether you want CPU-only or CUDA GPU support. The CPU-only version is the simplest
+      starting point.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Shell — CPU only</p>
+      <p>pip install torch torchvision</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">2. Tensors — The Core Primitive</h4>
+    <p class="mt-3 text-gray-500">
+      Tensors are PyTorch's equivalent of NumPy arrays. The creation API is nearly identical,
+      and you can convert between them at any time. The key additions are
+      <code class="bg-gray-100 px-1 rounded text-sm">dtype</code> control and device placement (CPU vs GPU).
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>import torch</p>
+      <p class="mt-3">t = torch.tensor([1.0, 2.0, 3.0])</p>
+      <p class="mt-1">torch.zeros(3, 4)</p>
+      <p class="mt-1">torch.ones(2, 3)</p>
+      <p class="mt-1">torch.rand(3, 3)          <span class="text-gray-400"># uniform [0, 1)</span></p>
+      <p class="mt-1">torch.randn(3, 3)         <span class="text-gray-400"># standard normal</span></p>
+      <p class="mt-3 text-gray-400"># From NumPy (shares memory)</p>
+      <p>import numpy as np</p>
+      <p>t = torch.from_numpy(np.array([1, 2, 3]))</p>
+      <p class="mt-1">arr = t.numpy()           <span class="text-gray-400"># back to NumPy</span></p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">3. Tensor Operations</h4>
+    <p class="mt-3 text-gray-500">
+      All NumPy-style operations work on tensors — element-wise math, slicing, reshaping,
+      broadcasting. The matrix multiply operator <code class="bg-gray-100 px-1 rounded text-sm">@</code> is the one you'll use most in
+      neural network code.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>a = torch.tensor([1.0, 2.0, 3.0])</p>
+      <p>b = torch.tensor([4.0, 5.0, 6.0])</p>
+      <p class="mt-3">a + b         <span class="text-gray-400"># [5. 7. 9.]</span></p>
+      <p class="mt-1">a * b         <span class="text-gray-400"># [4. 10. 18.]</span></p>
+      <p class="mt-1">a.sum()       <span class="text-gray-400"># tensor(6.)</span></p>
+      <p class="mt-1">a.mean()</p>
+      <p class="mt-3">A = torch.rand(3, 4)</p>
+      <p>B = torch.rand(4, 5)</p>
+      <p>A @ B         <span class="text-gray-400"># matrix multiply → (3, 5)</span></p>
+      <p class="mt-3">a.reshape(1, 3)  <span class="text-gray-400"># (3,) → (1, 3)</span></p>
+      <p class="mt-1">a.unsqueeze(0)   <span class="text-gray-400"># same effect — adds a dimension</span></p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">4. Autograd — Automatic Differentiation</h4>
+    <p class="mt-3 text-gray-500">
+      This is what makes PyTorch special. When you create a tensor with
+      <code class="bg-gray-100 px-1 rounded text-sm">requires_grad=True</code>, PyTorch tracks every operation on it and can
+      compute gradients automatically by calling <code class="bg-gray-100 px-1 rounded text-sm">.backward()</code>.
+      This is the engine behind training neural networks.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>x = torch.tensor(3.0, requires_grad=True)</p>
+      <p class="mt-2">y = x ** 2 + 2 * x   <span class="text-gray-400"># y = x² + 2x</span></p>
+      <p class="mt-1">y.backward()          <span class="text-gray-400"># compute dy/dx</span></p>
+      <p class="mt-1">print(x.grad)         <span class="text-gray-400"># tensor(8.) → dy/dx at x=3 is 2x+2=8</span></p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">5. Building a Neural Network with nn.Module</h4>
+    <p class="mt-3 text-gray-500">
+      <code class="bg-gray-100 px-1 rounded text-sm">torch.nn.Module</code> is the base class for all neural networks. You define
+      layers in <code class="bg-gray-100 px-1 rounded text-sm">__init__</code> and the forward pass in
+      <code class="bg-gray-100 px-1 rounded text-sm">forward()</code>. PyTorch handles the backward pass automatically.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example — simple feedforward network</p>
+      <p>import torch.nn as nn</p>
+      <p class="mt-3">class Net(nn.Module):</p>
+      <p class="pl-4">def __init__(self):</p>
+      <p class="pl-8">super().__init__()</p>
+      <p class="pl-8">self.fc1 = nn.Linear(784, 128)  <span class="text-gray-400"># input → hidden</span></p>
+      <p class="pl-8">self.fc2 = nn.Linear(128, 10)   <span class="text-gray-400"># hidden → output</span></p>
+      <p class="mt-2 pl-4">def forward(self, x):</p>
+      <p class="pl-8">x = torch.relu(self.fc1(x))</p>
+      <p class="pl-8">return self.fc2(x)</p>
+      <p class="mt-3">model = Net()</p>
+      <p>print(model)</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">6. The Training Loop</h4>
+    <p class="mt-3 text-gray-500">
+      Every PyTorch training loop follows the same four steps: forward pass, compute loss,
+      backward pass, update weights. This explicit loop is what gives PyTorch its flexibility
+      compared to higher-level frameworks.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>loss_fn   = nn.CrossEntropyLoss()</p>
+      <p>optimizer = torch.optim.Adam(model.parameters(), lr=1e-3)</p>
+      <p class="mt-3">for epoch in range(10):</p>
+      <p class="pl-4">pred = model(X)               <span class="text-gray-400"># 1. forward</span></p>
+      <p class="pl-4">loss = loss_fn(pred, y)       <span class="text-gray-400"># 2. compute loss</span></p>
+      <p class="pl-4">optimizer.zero_grad()         <span class="text-gray-400"># clear old gradients</span></p>
+      <p class="pl-4">loss.backward()               <span class="text-gray-400"># 3. backward</span></p>
+      <p class="pl-4">optimizer.step()              <span class="text-gray-400"># 4. update weights</span></p>
+      <p class="pl-4">print(f"Loss: {'{loss.item():.4f}'}")</p>
+    </div>
+
+    <h4 class="mt-8 text-xl font-semibold text-gray-800">7. Moving to GPU</h4>
+    <p class="mt-3 text-gray-500">
+      Moving computation to a GPU is a single line change — call
+      <code class="bg-gray-100 px-1 rounded text-sm">.to(device)</code> on both your model and your data. PyTorch handles
+      the rest. Always check <code class="bg-gray-100 px-1 rounded text-sm">torch.cuda.is_available()</code> so your
+      code falls back gracefully to CPU.
+    </p>
+    <div class="mt-3 bg-gray-50 border border-gray-200 rounded-lg p-4 text-sm font-mono text-gray-600">
+      <p class="text-gray-400 text-xs uppercase mb-2">Example</p>
+      <p>device = 'cuda' if torch.cuda.is_available() else 'cpu'</p>
+      <p class="mt-2">model = Net().to(device)</p>
+      <p>X = X.to(device)</p>
+      <p>y = y.to(device)</p>
+    </div>
+
+    <p class="mt-8 text-gray-500">
+      PyTorch rewards developers who understand what's happening under the hood. The explicit
+      training loop, manual gradient management, and close relationship to NumPy make it
+      more transparent than alternatives — and that transparency pays off when debugging or
+      implementing custom architectures. Start with tensors and autograd, build a small
+      network, and work outward from there.
+    </p>
+  </div>
+</Layout>
